@@ -6,7 +6,7 @@ public class Welcome {
 		String[] noms = input.split(",");
 		StringBuilder s = new StringBuilder();
 		if (noms.length > 1) {
-			appellerDeuxNoms(s, noms);
+			appellerPlusieursNoms(s, noms);
 		} else {
 			noms[0] = noms[0].trim();
 			if (noms[0].length() > 0) {
@@ -23,14 +23,14 @@ public class Welcome {
 		return s.toString();
 	}
 	
-	private static void appellerDeuxNoms(StringBuilder s , String[] noms) {
+	private static void appellerPlusieursNoms(StringBuilder s , String[] noms) {
 		s.append("Hello, ");
-		char premierChar = Character.toUpperCase(noms[0].charAt(0));
-		s.append(premierChar);
-		s.append(noms[0].substring(1));
-		s.append(", ");
-		s.append(Character.toUpperCase(noms[1].charAt(0)));
-		s.append(noms[1].substring(1));
+		for (int i = 0 ; i < noms.length ; i++) {
+			s.append(Character.toUpperCase(noms[i].charAt(0)));
+			s.append(noms[i].substring(1));
+			if (i != noms.length - 1)
+				s.append(", ");
+		}
 	}
 
 	private static void crierNom(StringBuilder s,String noms) {

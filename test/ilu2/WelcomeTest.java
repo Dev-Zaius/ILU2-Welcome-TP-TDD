@@ -31,7 +31,6 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("THEO"),"HELLO, THEO !");
 
 	}
-	
 	@Test
 	void testExigence4() {
 		// Ex_4 : J'avais commencé à gérer les espaces inutiles dans mes tests
@@ -40,5 +39,11 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("amy,bob"),"Hello, Amy, Bob");
 		assertEquals(Welcome.welcome("amy,Léo"),"Hello, Amy, Léo");
 		assertEquals(Welcome.welcome("léo,Amy"),"Hello, Léo, Amy");
+	}
+	@Test
+	void testExigence5() {
+		assertEquals(Welcome.welcome("amy,bob,Jerry"),"Hello, Amy, Bob, Jerry");
+		assertEquals(Welcome.welcome("amy,bob,Jerry,paul,lucas"),"Hello, Amy, Bob, Jerry, Paul, Lucas");
+		assertEquals(Welcome.welcome("amy,Jerry,rené,lucas"),"Hello, Amy, Jerry, René, Lucas");
 	}
 }
