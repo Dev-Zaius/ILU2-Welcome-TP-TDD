@@ -23,4 +23,20 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("    bob "),"Hello, Bob");
 		assertEquals(Welcome.welcome(" Bob    "),"Hello, Bob");
 	}
+	@Test
+	void testExigence3() {
+		//Ex_3
+		assertEquals(Welcome.welcome("   "),"Hello, my friend");
+		assertEquals(Welcome.welcome(""),"Hello, my friend");
+
+		assertEquals(Welcome.welcome("    bob "),"Hello, Bob");
+		assertEquals(Welcome.welcome(" BOB    "),"HELLO, BOB !");
+
+		assertEquals(Welcome.welcome("MAX"),"HELLO, MAX !");
+		assertEquals(Welcome.welcome("max"),"Hello, Max");
+
+		assertEquals(Welcome.welcome("Theo"),"Hello, Theo");
+		assertEquals(Welcome.welcome("THEO"),"HELLO, THEO !");
+
+	}
 }
