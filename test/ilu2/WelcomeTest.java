@@ -46,4 +46,13 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("amy,bob,Jerry,paul,lucas"),"Hello, Amy, Bob, Jerry, Paul, Lucas");
 		assertEquals(Welcome.welcome("amy,Jerry,rené,lucas"),"Hello, Amy, Jerry, René, Lucas");
 	}
+	@Test
+	void testExigence6() {
+		assertEquals(Welcome.welcome("Amy,BOB,Jerry"),"Hello, Amy, Jerry. AND HELLO, BOB !");
+		assertEquals(Welcome.welcome("AMY,BOB,Jerry,joe"),"Hello, Jerry, Joe. AND HELLO, AMY, BOB !");
+		assertEquals(Welcome.welcome("AMY,jerry,joe,LUCAS"),"Hello, Jerry, Joe. AND HELLO, AMY, LUCAS !");
+		// Mais aussi
+		assertEquals(Welcome.welcome("AMY,JERRY,JOE,LUCAS"),"HELLO, AMY, JERRY, JOE, LUCAS !");
+		assertEquals(Welcome.welcome("AMY,JERRY"),"HELLO, AMY, JERRY !");
+	}
 }
