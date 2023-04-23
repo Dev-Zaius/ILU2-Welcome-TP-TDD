@@ -6,73 +6,99 @@ public class Welcome {
 		String[] noms = input.replaceAll("\\s", "").split(",");
 		StringBuilder s = new StringBuilder("Hello, ");
 		if (input.trim().length() > 0) {
-			if (noms.length > 1)
-				appellerPlusieursNoms(s, noms);
-			else if (noms[0].equals(noms[0].toUpperCase())){
-				s.replace(0, s.length(), "HELLO, ");
-				crierNom(s,noms[0], true);
-			} else {
-				appelerNom(s, noms[0],true);
-			}
+			appellerNoms(s, noms);
 		} else {
 			s.append("my friend");
 		}
 		return s.toString();
 	}
 	
-	private static void appellerPlusieursNoms(StringBuilder s , String[] noms) {
-		StringBuilder nomsAAppeler = new StringBuilder();
-		StringBuilder nomsACrier = new StringBuilder();
-		int tailleDernierCrier = 0;
-		int tailleDernierAppeler = 0;
+	private static void appellerNoms(StringBuilder s , String[] noms) {
+		String[] nomsAAppeler = new String[20];
+		String[] nomsACrier = new String[20];
+		int[] occurAppel = new int[20];
+		int[] occurCri = new int[20];
+		int tailleAppels = 0;
+		int tailleCris = 0;
 		for (int i = 0 ; i < noms.length ; i++) {
 			if (noms[i].equals(noms[i].toUpperCase())) {
-				crierNom(nomsACrier,noms[i],false);
-				tailleDernierCrier = noms[i].length();
+				tailleCris = crierNom(tailleAppels,tailleCris,occurCri,occurAppel,nomsACrier,nomsAAppeler,noms[i]);
 			} else {
-				appelerNom(nomsAAppeler,noms[i],false);
-				tailleDernierAppeler = noms[i].length();
+				tailleAppels = appelerNom(tailleAppels,tailleCris,occurCri,occurAppel,nomsACrier,nomsAAppeler,noms[i]);
 			}
 		}
-		construirePhraseEntiere(nomsAAppeler,nomsACrier,s,tailleDernierCrier,tailleDernierAppeler);
+		System.out.println("--------------------");
+		for (int i = 0 ; i < nomsAAppeler.length ; i++) {
+			if (nomsAAppeler[i] != null) System.out.print(nomsAAppeler[i] + "(x" + occurAppel[i]+"), ");
+		}
+		System.out.println("tailleAppels = " +tailleAppels);
+		for (int i = 0 ; i < nomsAAppeler.length ; i++) {
+			if (nomsAAppeler[i] != null) System.out.print(nomsACrier[i] + "(x"+occurCri[i]+"), ");
+		}
+		System.out.println("tailleCris = " +tailleCris);
+		construirePhraseEntiere(tailleCris,tailleAppels,occurCri,occurAppel,nomsAAppeler,nomsACrier,s);
 	}
 	
-	private static void construirePhraseEntiere(StringBuilder nomsAAppeler,StringBuilder nomsACrier,StringBuilder s,int tailleDernierCrier,int tailleDernierAppeler) {
-		if (nomsAAppeler.length() > 0) {
-			formatterPlusieursNoms(s, nomsAAppeler, tailleDernierAppeler, false);
+	private static void construirePhraseEntiere(int tailleCris, int tailleAppels,int[] occurCris, int[] occurAppels,String[] nomsAAppeler,String[] nomsACrier,StringBuilder s) {
+		if (tailleAppels > 0) {
+			formatterPlusieursNoms(tailleAppels,s, nomsAAppeler, occurAppels, false);
 		}
-		if (nomsACrier.length() > 0) {
-			if (nomsAAppeler.length() == 0) {
+		if (tailleCris > 0) {
+			if (tailleAppels == 0) {
 				s.replace(0, s.length(), "HELLO, ");
 			} else {
 				s.append(". AND HELLO, ");
 			}
-			formatterPlusieursNoms(s, nomsACrier, tailleDernierCrier, true);
-			s.append(" !");
+			formatterPlusieursNoms(tailleCris,s, nomsACrier, occurCris, true);
 		}
 	}
 	
-	private static void formatterPlusieursNoms(StringBuilder s, StringBuilder noms , int tailleDernierNom, boolean crier) {
-		if (noms.length() == tailleDernierNom + 2) {
-			s.append(noms);
+	private static void formatterPlusieursNoms(int taille,StringBuilder s, String[] noms , int[] occurences, boolean crier) {
+		int i;
+		if (taille == 1) {
+			s.append(noms[0]);
+			if (occurences[0] > 1) s.append(" (x"+occurences[0]+")");
 		} else {
-				s.append(noms.subSequence(0, noms.length() - 4 - tailleDernierNom));
-				s.append((crier ? " AND " : " and "));
-				s.append(noms.subSequence(noms.length() - 2 - tailleDernierNom, noms.length()));
+			for (i = 0 ; i < taille-1  ; i++) {
+				s.append(noms[i] + (occurences[i] > 1 ? " (x" +occurences[i]+"), ":", "));
+			}
+			s.delete(s.length()-2, s.length());
+			s.append((crier ? " AND " : " and ") + noms[taille - 1] + (occurences[taille-1] >1 ? " (x"+occurences[taille-1]+")":"" ));
 		}
-		s.delete(s.length()-2,s.length());
+		if (crier) s.append(" !");
 	}
 
-	private static void crierNom(StringBuilder s,String nom,boolean estDernierNom) {
-		s.append(nom);
-		s.append((estDernierNom ? " !" : ", ") );
+	private static int crierNom(int tailleAppels,int tailleCris,int[] occurCri, int[] occurAppel,String[] nomsACrier,String[] nomsAAppeler,String nom) {
+		boolean DejaCri = regarderSiVu(tailleCris, nom, nomsACrier, occurCri); 
+		boolean DejaAppel = regarderSiVu(tailleAppels, nom, nomsAAppeler, occurAppel); 
+	
+		if (!DejaCri && !DejaAppel) {
+			nomsACrier[tailleCris] = nom;
+			occurCri[tailleCris]++;
+			tailleCris += 1;
+		}
+		return tailleCris ;
 	}
 	
-	private static void appelerNom(StringBuilder s, String nom, boolean estDernierNom) {
-		char premierChar = Character.toUpperCase(nom.charAt(0));
-		String finNom = nom.substring(1);
-		s.append(premierChar);
-		s.append(finNom);
-		s.append((estDernierNom ? "" : ", ") );
+	private static int appelerNom(int tailleAppels,int tailleCris,int[] occurCri, int[] occurAppel,String[] nomsACrier,String[] nomsAAppeler,String nom) {
+		boolean DejaCri = regarderSiVu(tailleCris, nom, nomsACrier, occurCri); 
+		boolean DejaAppel = regarderSiVu(tailleAppels, nom, nomsAAppeler, occurAppel); 
+	
+		if (!DejaCri && !DejaAppel) {
+			nomsAAppeler[tailleAppels] = Character.toUpperCase(nom.charAt(0)) + nom.substring(1);
+			occurAppel[tailleAppels]++;
+			tailleAppels+=1;
+		}
+		return tailleAppels;
+	}
+
+	private static boolean regarderSiVu(int taille,String nom , String[] noms , int[] occur) {
+		for (int i = 0 ; i < taille ; i++ ) {
+			if (nom.equalsIgnoreCase(noms[i])) {
+				occur[i]++;
+				return true;
+			}
+		}
+		return false;
 	}
 }

@@ -80,4 +80,14 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("AMY  ,       JERRY"),"HELLO, AMY AND JERRY !");
 		assertEquals(Welcome.welcome(" AMY ,  JERRY  , Perry , MAX ,  LEO"),"Hello, Perry. AND HELLO, AMY, JERRY, MAX AND LEO !");
 	}
+	@Test 
+	void testExigence9(){
+		// Espaces inutiles
+		// Je pars du principe que si un nom est d'abord appelé ou d'abord crié alors il sera regroupé par sa première appelation 
+		assertEquals(Welcome.welcome("   amy  , bob  , bob,bob "),"Hello, Amy and Bob (x3)");
+		assertEquals(Welcome.welcome("amy,  GEORGES , amy,GEORGES,Georges,georges  "),"Hello, Amy (x2). AND HELLO, GEORGES (x4) !");
+		assertEquals(Welcome.welcome(" Amy ,AMY,bob , BOB  ,Jerry,jerry   "),"Hello, Amy (x2), Bob (x2) and Jerry (x2)");
+		assertEquals(Welcome.welcome("   amy  ,Bob,Jerry,Amy,Jerry ,joe "),"Hello, Amy (x2), Bob, Jerry (x2) and Joe");
+		assertEquals(Welcome.welcome("      AMY,     jerry,     joe,lucas,amy,amy,LUCAS      "),"Hello, Jerry, Joe and Lucas (x2). AND HELLO, AMY (x3) !");
+	}
 }
