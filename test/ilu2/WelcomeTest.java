@@ -90,4 +90,11 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("   amy  ,Bob,Jerry,Amy,Jerry ,joe "),"Hello, Amy (x2), Bob, Jerry (x2) and Joe");
 		assertEquals(Welcome.welcome("      AMY,     jerry,     joe,lucas,amy,amy,LUCAS      "),"Hello, Jerry, Joe and Lucas (x2). AND HELLO, AMY (x3) !");
 	}
+	@Test
+	void testExigence10() {
+		assertEquals(Welcome.welcome("   amy  , bob  , yoda,bob "),"Amy, Bob (x2) and Yoda, Hello");
+		assertEquals(Welcome.welcome("amy,  GEORGES ,YODA, amy,GEORGES,Georges,georges  "),"Hello, Amy (x2). AND GEORGES (x4) AND YODA HELLO !");
+		assertEquals(Welcome.welcome(" yoda,YODA,Amy ,AMY,bob , BOB  ,Jerry,jerry   "),"Yoda, Amy (x2), Bob (x2) and Jerry (x2), Hello. AND YODA HELLO !");
+		assertEquals(Welcome.welcome("   amy  ,Bob,yoda,Yoda,yoda,Jerry,Amy,Jerry ,joe "),"Amy (x2), Bob, Yoda (x3), Jerry (x2) and Joe, Hello");
+	}
 }
