@@ -17,27 +17,29 @@ public class Welcome {
 		} else {
 			s.append("my friend");
 		}
-		System.out.println(s);
 		return s.toString();
 	}
 	
 	private static void appellerPlusieursNoms(StringBuilder s , String[] noms) {
 		StringBuilder nomsAAppeler = new StringBuilder();
 		StringBuilder nomsACrier = new StringBuilder();
+		int tailleDernierCrier = 0;
+		int tailleDernierAppeler = 0;
 		for (int i = 0 ; i < noms.length ; i++) {
 			if (noms[i].equals(noms[i].toUpperCase())) {
 				crierNom(nomsACrier,noms[i],false);
+				tailleDernierCrier = noms[i].length();
 			} else {
 				appelerNom(nomsAAppeler,noms[i],false);
+				tailleDernierAppeler = noms[i].length();
 			}
 		}
-		construirePhraseEntiere(nomsAAppeler,nomsACrier,s);
+		construirePhraseEntiere(nomsAAppeler,nomsACrier,s,tailleDernierCrier,tailleDernierAppeler);
 	}
 	
-	private static void construirePhraseEntiere(StringBuilder nomsAAppeler,StringBuilder nomsACrier,StringBuilder s) {
+	private static void construirePhraseEntiere(StringBuilder nomsAAppeler,StringBuilder nomsACrier,StringBuilder s,int tailleDernierCrier,int tailleDernierAppeler) {
 		if (nomsAAppeler.length() > 0) {
-			s.append(nomsAAppeler);
-			s.delete(s.length()-2,s.length());
+			formatterPlusieursNoms(s, nomsAAppeler, tailleDernierAppeler, false);
 		}
 		if (nomsACrier.length() > 0) {
 			if (nomsAAppeler.length() == 0) {
@@ -45,9 +47,20 @@ public class Welcome {
 			} else {
 				s.append(". AND HELLO, ");
 			}
-			s.append(nomsACrier);
-			s.replace(s.length()-2, s.length()," !");
+			formatterPlusieursNoms(s, nomsACrier, tailleDernierCrier, true);
+			s.append(" !");
 		}
+	}
+	
+	private static void formatterPlusieursNoms(StringBuilder s, StringBuilder noms , int tailleDernierNom, boolean crier) {
+		if (noms.length() == tailleDernierNom + 2) {
+			s.append(noms);
+		} else {
+				s.append(noms.subSequence(0, noms.length() - 4 - tailleDernierNom));
+				s.append((crier ? " AND " : " and "));
+				s.append(noms.subSequence(noms.length() - 2 - tailleDernierNom, noms.length()));
+		}
+		s.delete(s.length()-2,s.length());
 	}
 
 	private static void crierNom(StringBuilder s,String nom,boolean estDernierNom) {

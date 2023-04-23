@@ -36,23 +36,36 @@ public class WelcomeTest {
 		// Ex_4 : J'avais commencé à gérer les espaces inutiles dans mes tests
 		// précédents avant de me rendre compte que c'était l'exigence 8. J'arrêtes de les 
 		// gérer à partir d'ici les espaces
-		assertEquals(Welcome.welcome("amy,bob"),"Hello, Amy, Bob");
-		assertEquals(Welcome.welcome("amy,Léo"),"Hello, Amy, Léo");
-		assertEquals(Welcome.welcome("léo,Amy"),"Hello, Léo, Amy");
+		//assertEquals(Welcome.welcome("amy,bob"),"Hello, Amy, Bob");
+		//assertEquals(Welcome.welcome("amy,Léo"),"Hello, Amy, Léo");
+		//assertEquals(Welcome.welcome("léo,Amy"),"Hello, Léo, Amy");
 	}
 	@Test
 	void testExigence5() {
-		assertEquals(Welcome.welcome("amy,bob,Jerry"),"Hello, Amy, Bob, Jerry");
-		assertEquals(Welcome.welcome("amy,bob,Jerry,paul,lucas"),"Hello, Amy, Bob, Jerry, Paul, Lucas");
-		assertEquals(Welcome.welcome("amy,Jerry,rené,lucas"),"Hello, Amy, Jerry, René, Lucas");
+		//assertEquals(Welcome.welcome("amy,bob,Jerry"),"Hello, Amy, Bob, Jerry");
+		//assertEquals(Welcome.welcome("amy,bob,Jerry,paul,lucas"),"Hello, Amy, Bob, Jerry, Paul, Lucas");
+		//assertEquals(Welcome.welcome("amy,Jerry,rené,lucas"),"Hello, Amy, Jerry, René, Lucas");
 	}
 	@Test
 	void testExigence6() {
-		assertEquals(Welcome.welcome("Amy,BOB,Jerry"),"Hello, Amy, Jerry. AND HELLO, BOB !");
-		assertEquals(Welcome.welcome("AMY,BOB,Jerry,joe"),"Hello, Jerry, Joe. AND HELLO, AMY, BOB !");
-		assertEquals(Welcome.welcome("AMY,jerry,joe,LUCAS"),"Hello, Jerry, Joe. AND HELLO, AMY, LUCAS !");
+		//assertEquals(Welcome.welcome("Amy,BOB,Jerry"),"Hello, Amy, Jerry. AND HELLO, BOB !");
+		//assertEquals(Welcome.welcome("AMY,BOB,Jerry,joe"),"Hello, Jerry, Joe. AND HELLO, AMY, BOB !");
+		//assertEquals(Welcome.welcome("AMY,jerry,joe,LUCAS"),"Hello, Jerry, Joe. AND HELLO, AMY, LUCAS !");
 		// Mais aussi
-		assertEquals(Welcome.welcome("AMY,JERRY,JOE,LUCAS"),"HELLO, AMY, JERRY, JOE, LUCAS !");
-		assertEquals(Welcome.welcome("AMY,JERRY"),"HELLO, AMY, JERRY !");
+		//assertEquals(Welcome.welcome("AMY,JERRY,JOE,LUCAS"),"HELLO, AMY, JERRY, JOE, LUCAS !");
+		//assertEquals(Welcome.welcome("AMY,JERRY"),"HELLO, AMY, JERRY !");
+	}
+	@Test 
+	void testExigence7(){
+		// L'intersection entre les tests qui passent pour les exigences 4,5,6 et 7 étant nulle
+		// j'ai décidé de commenter les exigences des tests 4,5,6 et 7
+		assertEquals(Welcome.welcome("amy,bob"),"Hello, Amy and Bob");
+		assertEquals(Welcome.welcome("amy,GEORGES"),"Hello, Amy. AND HELLO, GEORGES !");
+		assertEquals(Welcome.welcome("Amy,BOB,Jerry"),"Hello, Amy and Jerry. AND HELLO, BOB !");
+		assertEquals(Welcome.welcome("AMY,BOB,Jerry,joe"),"Hello, Jerry and Joe. AND HELLO, AMY AND BOB !");
+		assertEquals(Welcome.welcome("AMY,jerry,joe,LUCAS"),"Hello, Jerry and Joe. AND HELLO, AMY AND LUCAS !");
+		assertEquals(Welcome.welcome("AMY,JERRY,JOE,LUCAS"),"HELLO, AMY, JERRY, JOE AND LUCAS !");
+		assertEquals(Welcome.welcome("AMY,JERRY"),"HELLO, AMY AND JERRY !");
+		assertEquals(Welcome.welcome("AMY,JERRY,Perry,MAX,LEO"),"Hello, Perry. AND HELLO, AMY, JERRY, MAX AND LEO !");
 	}
 }
