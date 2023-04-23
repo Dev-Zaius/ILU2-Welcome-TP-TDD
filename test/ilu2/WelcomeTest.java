@@ -68,4 +68,16 @@ public class WelcomeTest {
 		assertEquals(Welcome.welcome("AMY,JERRY"),"HELLO, AMY AND JERRY !");
 		assertEquals(Welcome.welcome("AMY,JERRY,Perry,MAX,LEO"),"Hello, Perry. AND HELLO, AMY, JERRY, MAX AND LEO !");
 	}
+	@Test 
+	void testExigence8(){
+		// Espaces inutiles
+		assertEquals(Welcome.welcome("   amy  , bob   "),"Hello, Amy and Bob");
+		assertEquals(Welcome.welcome("amy,  GEORGES   "),"Hello, Amy. AND HELLO, GEORGES !");
+		assertEquals(Welcome.welcome(" Amy   ,    BOB  ,  Jerry     "),"Hello, Amy and Jerry. AND HELLO, BOB !");
+		assertEquals(Welcome.welcome("   AMY  ,BOB,Jerry,    joe "),"Hello, Jerry and Joe. AND HELLO, AMY AND BOB !");
+		assertEquals(Welcome.welcome("      AMY,     jerry,     joe,LUCAS      "),"Hello, Jerry and Joe. AND HELLO, AMY AND LUCAS !");
+		assertEquals(Welcome.welcome("     AMY ,    JERRY,JOE,LUCAS"),"HELLO, AMY, JERRY, JOE AND LUCAS !");
+		assertEquals(Welcome.welcome("AMY  ,       JERRY"),"HELLO, AMY AND JERRY !");
+		assertEquals(Welcome.welcome(" AMY ,  JERRY  , Perry , MAX ,  LEO"),"Hello, Perry. AND HELLO, AMY, JERRY, MAX AND LEO !");
+	}
 }

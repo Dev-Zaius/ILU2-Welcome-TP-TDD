@@ -3,7 +3,7 @@ package ilu2;
 public class Welcome {
 
 	public static String welcome(String input) {
-		String[] noms = input.split(",");
+		String[] noms = input.replaceAll("\\s", "").split(",");
 		StringBuilder s = new StringBuilder("Hello, ");
 		if (input.trim().length() > 0) {
 			if (noms.length > 1)
